@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
         <title>ฝากบอก 4/1 | Anonymous Space</title>
 
         <link
@@ -16,6 +16,7 @@
             src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
         <script
             src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
         <script
             src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -28,14 +29,14 @@
         <div class="container">
             <header>
                 <h1><i class="fa-solid fa-paper-plane"></i> ฝากบอก 4/1</h1>
-                <p
-                    class="subtitle">พื้นที่ส่งความรู้สึกถึงเพื่อนแบบไม่ระบุตัวตน</p>
+                <p class="subtitle">ฝากบอกลูกครูกฤต│Single Dad</p>
             </header>
 
             <div id="sendPage" class="page active">
                 <div class="select-wrapper">
-                    <label for="recipientSelect"><i
-                            class="fa-solid fa-user-tag"></i> ส่งถึงใคร:</label>
+                    <label for="recipientSelect">
+                        <i class="fa-solid fa-user-tag"></i> ส่งถึงใคร:
+                    </label>
                     <select id="recipientSelect">
                         <option value="ทุกคนในห้อง">📢 ทุกคนในห้อง</option>
                     </select>
@@ -43,7 +44,7 @@
 
                 <div class="input-wrapper">
                     <textarea id="messageInput"
-                        placeholder="พิมพ์อะไรบางอย่างถึงเพื่อน..."></textarea>
+                        placeholder="พิมพ์ข้อความ..."></textarea>
                     <div class="char-count"><span id="count">0</span>/200</div>
                 </div>
 
@@ -52,8 +53,7 @@
                 </button>
 
                 <button class="btn-link" onclick="showPage('viewPage')">
-                    ดูข้อความจากเพื่อนๆ <i
-                        class="fa-solid fa-chevron-right"></i>
+                    ดูข้อความทั้งหมด <i class="fa-solid fa-chevron-right"></i>
                 </button>
                 <div id="status"></div>
             </div>
@@ -63,10 +63,29 @@
                     <button class="btn-back" onclick="showPage('sendPage')">
                         <i class="fa-solid fa-arrow-left"></i> กลับ
                     </button>
-                    <h3>ข้อความล่าสุด</h3>
                 </div>
+
+                <div class="filter-container">
+                    <p class="filter-label">เลือกดูตามเพื่อน:</p>
+                    <div class="filter-chips" id="filterChips">
+                        <button class="chip active"
+                            onclick="filterBy('all', this)">
+                            <div class="chip-icon">🌈</div>
+                            <span>ทั้งหมด</span>
+                        </button>
+                        <button class="chip"
+                            onclick="filterBy('ทุกคนในห้อง', this)">
+                            <div class="chip-icon">📢</div>
+                            <span>ทั้งห้อง</span>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="message-list" id="messageList">
-                    <div class="loading">กำลังดึงข้อมูล...</div>
+                    <div class="loading"
+                        style="text-align: center; padding: 20px; color: #9ca3af;">
+                        <i class="fas fa-spinner fa-spin"></i> กำลังดึงข้อมูล...
+                    </div>
                 </div>
             </div>
         </div>
