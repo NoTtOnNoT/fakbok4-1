@@ -1,0 +1,265 @@
+:root {
+    --primary: #6366f1;
+    --secondary: #a855f7;
+    --accent: #ec4899;
+    --glass: rgba(255, 255, 255, 0.85);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Prompt', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0f172a;
+    overflow-x: hidden;
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #4f46e5, #9333ea, #db2777);
+    opacity: 0.4;
+    filter: blur(100px);
+    z-index: -1;
+}
+
+.container {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 2rem;
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s ease;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin: 0;
+    background: linear-gradient(to right, #4f46e5, #db2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: #4b5563;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.page {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Input area */
+.input-wrapper {
+    position: relative;
+}
+
+textarea {
+    width: 100%;
+    height: 160px;
+    border-radius: 1.2rem;
+    border: 2px solid rgba(0, 0, 0, 0.05);
+    padding: 1.2rem;
+    font-family: inherit;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    resize: none;
+    transition: 0.3s;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.char-count {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+}
+
+.btn-send {
+    width: 100%;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.btn-send:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}
+
+.btn-link {
+    background: none;
+    color: var(--primary);
+    width: 100%;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.btn-back {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 0.5rem 1rem;
+    border-radius: 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* Message List */
+.view-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.message-list {
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.msg-card {
+    background: white;
+    padding: 1.2rem;
+    border-radius: 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid var(--secondary);
+}
+
+.msg-time {
+    font-size: 0.7rem;
+    color: #9ca3af;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.msg-text {
+    color: #1f2937;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+
+.message-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.message-list::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+}
+
+.message-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* เพิ่มเติมจากของเดิม */
+.select-wrapper {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.select-wrapper label {
+    display: block;
+    font-size: 0.85rem;
+    color: #6366f1;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+#recipientSelect {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid rgba(99, 102, 241, 0.2);
+    font-family: 'Prompt', sans-serif;
+    font-size: 1rem;
+    background: white;
+    outline: none;
+    cursor: pointer;
+}
+
+#recipientSelect:focus {
+    border-color: var(--primary);
+}
+
+.msg-to {
+    display: inline-block;
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.msg-time {
+    font-size: 0.75rem;
+    color: #64748b;
+    /* สีเทาเข้มขึ้นเล็กน้อยให้สบายตา */
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.msg-time i {
+    color: var(--primary);
+    /* ใส่สีไอคอนนาฬิกาให้เข้ากับธีม */
+}

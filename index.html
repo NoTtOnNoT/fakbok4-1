@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>ฝากบอก 4/1 | Anonymous Space</title>
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+        <script
+            src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+        <script
+            src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <div class="background-overlay"></div>
+
+        <div class="container">
+            <header>
+                <h1><i class="fa-solid fa-paper-plane"></i> ฝากบอก 4/1</h1>
+                <p
+                    class="subtitle">พื้นที่ส่งความรู้สึกถึงเพื่อนแบบไม่ระบุตัวตน</p>
+            </header>
+
+            <div id="sendPage" class="page active">
+                <div class="select-wrapper">
+                    <label for="recipientSelect"><i
+                            class="fa-solid fa-user-tag"></i> ส่งถึงใคร:</label>
+                    <select id="recipientSelect">
+                        <option value="ทุกคนในห้อง">📢 ทุกคนในห้อง</option>
+                    </select>
+                </div>
+
+                <div class="input-wrapper">
+                    <textarea id="messageInput"
+                        placeholder="พิมพ์อะไรบางอย่างถึงเพื่อน..."></textarea>
+                    <div class="char-count"><span id="count">0</span>/200</div>
+                </div>
+
+                <button class="btn-send" onclick="sendMessage()">
+                    <span>ส่งข้อความ</span> <i class="fa-solid fa-rocket"></i>
+                </button>
+
+                <button class="btn-link" onclick="showPage('viewPage')">
+                    ดูข้อความจากเพื่อนๆ <i
+                        class="fa-solid fa-chevron-right"></i>
+                </button>
+                <div id="status"></div>
+            </div>
+
+            <div id="viewPage" class="page">
+                <div class="view-header">
+                    <button class="btn-back" onclick="showPage('sendPage')">
+                        <i class="fa-solid fa-arrow-left"></i> กลับ
+                    </button>
+                    <h3>ข้อความล่าสุด</h3>
+                </div>
+                <div class="message-list" id="messageList">
+                    <div class="loading">กำลังดึงข้อมูล...</div>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
