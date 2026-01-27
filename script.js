@@ -41,7 +41,7 @@ const studentList = [
     { fullname: "นางสาวลลนา สังข์แก้ว", nickname: "ตอง", ig: "txng._o", fb: "@lalana.sangkaew", img: "std27.jpeg" },
     { fullname: "นางสาวธัญญรัตน์ เส้งนนท์", nickname: "เทียน", ig: "thayyratnesngnnth", fb: "@thay.y.ratn.seng.nnth", img: "std28.jpeg" },
     { fullname: "นางสาวภูริชญา โสะบิลเมาะ", nickname: "นานะ", ig: "nanaann.p", fb: "@purichaya.nana.7", img: "std29.jpeg" },
-    { fullname: "นางสาวกัญญาภัทร แวงรักษ์", nickname: "ด้า", ig: "nourida_78", fb: "@kanyaphat.sangrak", img: "std30.jpeg" }
+    { fullname: "นางสาวกัญญาภัทร แสงรักษ์", nickname: "ด้า", ig: "nourida_78", fb: "@kanyaphat.sangrak", img: "std30.jpeg" }
 ];
 
 // --- 1. สร้างรายชื่อพร้อมรูปและชื่อเล่น ---
@@ -51,14 +51,11 @@ const filterChips = document.getElementById('filterChips');
 studentList.forEach((std, index) => {
     const stdNo = index + 1;
     const label = `เลขที่ ${stdNo} (${std.nickname})`;
-
-    // สร้างตัวเลือกในหน้าส่ง
     let opt = document.createElement('option');
     opt.value = label;
     opt.text = `👤 เลขที่ ${stdNo} : ${std.nickname}`;
     recipientSelect.appendChild(opt);
 
-    // สร้างปุ่ม Chip (รูป + ชื่อเล่น) ในหน้าดู
     let btn = document.createElement('button');
     btn.className = 'chip';
     btn.innerHTML = `
@@ -74,7 +71,6 @@ function sendMessage() {
     const msgInput = document.getElementById('messageInput');
     const recipient = recipientSelect.value;
     const text = msgInput.value.trim();
-
     if (!text) return alert("พิมพ์ข้อความก่อนนะ!");
 
     db.ref('messages').push({
@@ -98,7 +94,7 @@ function filterBy(val, el) {
     renderMessages();
 }
 
-// --- 4. ฟังก์ชันแสดงผลการ์ดข้อความ (เลขที่ ชื่อเล่น รูป) ---
+// --- 4. ฟังก์ชันแสดงผลการ์ดข้อความ ---
 function renderMessages() {
     const listDiv = document.getElementById('messageList');
     db.ref('messages').once('value', (snapshot) => {
@@ -110,33 +106,107 @@ function renderMessages() {
             currentFilter === 'all' ? true : m.to === currentFilter
         );
 
-        filtered.forEach(item => {
-            // ค้นหาข้อมูลนักเรียนเพื่อดึงรูปภาพ
+        filtered.forEach((item, index) => {
             const stdData = studentList.find((s, i) => `เลขที่ ${i + 1} (${s.nickname})` === item.to);
-
             const d = new Date(item.timestamp);
             const dateStr = d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
             const timeStr = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
 
+            // เพิ่ม onclick="openModal(...)" ที่ msg-card
             listDiv.innerHTML += `
-                <div class="msg-card">
-                    <div class="msg-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                        <img src="img/${stdData ? stdData.img : 'all.png'}" 
-                             style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;"
-                             onerror="this.src='https://ui-avatars.com/api/?name=ALL&background=6366f1&color=fff'">
-                        <div class="msg-info">
-                            <div class="msg-to" style="font-weight: 600; color: #6366f1; font-size: 0.9rem;">ถึง: ${item.to}</div>
-                            <span class="msg-time" style="font-size: 0.7rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> ${dateStr} | ${timeStr}</span>
-                        </div>
-                    </div>
-                    <div class="msg-text" style="line-height: 1.5; color: #333; word-break: break-word;">${item.text}</div>
+        <div class="msg-card" 
+             onclick="openModal('${stdData ? stdData.img : 'all.png'}', '${item.to}', '${dateStr} | ${timeStr}', '${encodeURIComponent(item.text)}')"
+             style="cursor: pointer; position: relative; background: white; padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <div class="msg-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <img src="img/${stdData ? stdData.img : 'all.png'}" 
+                     style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;"
+                     onerror="this.src='https://ui-avatars.com/api/?name=${stdData ? encodeURIComponent(stdData.nickname) : 'ALL'}&background=random&color=fff'">
+                <div class="msg-info" style="flex-grow: 1;">
+                    <div class="msg-to" style="font-weight: 600; color: #6366f1; font-size: 0.9rem;">ถึง: ${item.to}</div>
+                    <span class="msg-time" style="font-size: 0.7rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> ${dateStr} | ${timeStr}</span>
                 </div>
-            `;
+                <div style="color: #6366f1; opacity: 0.5;"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></div>
+            </div>
+            <div class="msg-text" style="line-height: 1.5; color: #333; word-break: break-word;">${item.text}</div>
+        </div>
+    `;
         });
     });
 }
 
-// อัปเดต Realtime
+// ฟังก์ชันเปิด Modal พร้อมใส่ข้อมูล
+function openModal(img, to, time, text) {
+    document.getElementById('modalImg').src = `img/${img}`;
+    document.getElementById('modalTo').innerText = to;
+    document.getElementById('modalTime').innerText = time;
+    document.getElementById('modalText').innerText = decodeURIComponent(text);
+    document.getElementById('msgModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // กันเลื่อนหน้าจอหลัง
+}
+
+function closeModal() {
+    document.getElementById('msgModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// ฟังก์ชันแคปรูปที่ปรับสเกลให้ชัดพิเศษ
+async function processShare() {
+    const area = document.getElementById('captureArea');
+    const canvas = await html2canvas(area, {
+        scale: 3, // ชัดมาก
+        useCORS: true,
+        borderRadius: 24
+    });
+
+    canvas.toBlob(async (blob) => {
+        const file = new File([blob], "story-4-1.png", { type: "image/png" });
+        if (navigator.share && navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file] });
+        } else {
+            const link = document.createElement('a');
+            link.download = `ฝากบอก_4_1.png`;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+        }
+    }, "image/png");
+}
+
+// --- ฟังก์ชันใหม่: แปลงการ์ดเป็นรูปภาพและแชร์ ---
+async function shareAsImage(cardId) {
+    const card = document.getElementById(cardId);
+
+    // ตั้งค่าการแคปภาพให้ชัดและพื้นหลังสวย
+    const canvas = await html2canvas(card, {
+        scale: 2, // เพิ่มความชัด 2 เท่า
+        backgroundColor: "#ffffff",
+        borderRadius: 15,
+        useCORS: true // อนุญาตให้ดึงรูปโปรไฟล์จากเว็บอื่นมาแสดงในภาพได้
+    });
+
+    canvas.toBlob(async (blob) => {
+        const file = new File([blob], "message.png", { type: "image/png" });
+
+        if (navigator.share && navigator.canShare({ files: [file] })) {
+            // ถ้าเป็นมือถือที่รองรับ จะเด้งหน้าแชร์ภาพไป IG/FB ได้เลย
+            try {
+                await navigator.share({
+                    files: [file],
+                    title: 'ฝากบอก 4/1',
+                });
+            } catch (err) {
+                console.error("Share failed:", err);
+            }
+        } else {
+            // ถ้าเป็นคอมพิวเตอร์ จะดาวน์โหลดรูปภาพเก็บไว้ให้แทน
+            const link = document.createElement('a');
+            link.download = `ฝากบอก_4_1.png`;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            alert("บันทึกรูปภาพลงเครื่องแล้ว!");
+        }
+    }, "image/png");
+}
+
 db.ref('messages').on('value', renderMessages);
 
 function showPage(id) {
@@ -144,7 +214,6 @@ function showPage(id) {
     document.getElementById(id).classList.add('active');
 }
 
-// นับตัวอักษร
 document.getElementById('messageInput').addEventListener('input', function () {
     document.getElementById('count').innerText = this.value.length;
 });

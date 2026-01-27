@@ -38,9 +38,9 @@ body {
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 2rem;
-    padding: 2.5rem;
-    width: 90%;
-    max-width: 480px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: auto;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     transition: all 0.5s ease;
 }
@@ -363,4 +363,274 @@ button {
     font-weight: 600;
     color: var(--primary);
     font-size: 0.9rem;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* ส่วนที่จะเป็นรูปแชร์ (9:16 Feel) */
+.capture-card {
+    background: white;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.capture-card img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #6366f1;
+    margin-bottom: 15px;
+}
+
+.modal-recipient {
+    font-weight: 600;
+    color: #6366f1;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.modal-date {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+.modal-body {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.5;
+    font-style: italic;
+    word-break: break-word;
+}
+
+.modal-footer {
+    margin-top: 30px;
+    font-size: 10px;
+    color: #ddd;
+}
+
+.btn-share-full {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background: #6366f1;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* การจัดวาง Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 380px;
+    background: transparent;
+    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ดีไซน์รูปที่จะแชร์ (9:16 Feel) */
+.story-card {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    padding: 40px 25px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ลายจางๆ บนพื้นหลังรูป */
+.story-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
+    background-size: 24px 24px;
+    pointer-events: none;
+}
+
+.story-inner {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.profile-frame {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 5px;
+    background: linear-gradient(to bottom, #6366f1, #a855f7);
+    margin-bottom: 15px;
+}
+
+.profile-frame img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+}
+
+#modalTo {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+#modalTime {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.message-quote {
+    margin: 30px 0;
+    color: #334155;
+    position: relative;
+}
+
+.message-quote i {
+    color: #6366f1;
+    opacity: 0.2;
+    font-size: 1.5rem;
+}
+
+#modalText {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    font-weight: 500;
+    font-style: italic;
+    margin: 10px 0;
+    word-break: break-word;
+}
+
+.story-footer {
+    margin-top: 20px;
+    border-top: 1px dashed #cbd5e1;
+    width: 100%;
+    padding-top: 15px;
+}
+
+.story-footer span {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #94a3b8;
+    font-weight: 700;
+}
+
+/* ปุ่มกดใน Modal */
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+}
+
+.btn-share-story {
+    flex: 2;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: white;
+    color: #6366f1;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
