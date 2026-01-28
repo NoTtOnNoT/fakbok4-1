@@ -115,10 +115,10 @@ function renderMessages() {
             // เพิ่ม onclick="openModal(...)" ที่ msg-card
             listDiv.innerHTML += `
         <div class="msg-card" 
-             onclick="openModal('${stdData ? stdData.img : 'all.png'}', '${item.to}', '${dateStr} | ${timeStr}', '${encodeURIComponent(item.text)}')"
+             onclick="openModal('${stdData ? stdData.img : 'std0.jpeg'}', '${item.to}', '${dateStr} | ${timeStr}', '${encodeURIComponent(item.text)}')"
              style="cursor: pointer; position: relative; background: white; padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
             <div class="msg-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                <img src="img/${stdData ? stdData.img : 'all.png'}" 
+                <img src="img/${stdData ? stdData.img : 'std0.jpeg'}" 
                      style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;"
                      onerror="this.src='https://ui-avatars.com/api/?name=${stdData ? encodeURIComponent(stdData.nickname) : 'ALL'}&background=random&color=fff'">
                 <div class="msg-info" style="flex-grow: 1;">
